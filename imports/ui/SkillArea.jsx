@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import Skill from './Skill.jsx';
 
-// skillAre component
+// skillArea component
 export default class SkillArea extends Component {
 
 
@@ -16,9 +16,14 @@ export default class SkillArea extends Component {
   render() {
 
     return (
-      <div>
+
+      <div className="bs-docs-section">
+{/************ Progress Bars For Skills **************/}
+      <h3 id="progress-animated">SKILLS</h3>
         {this.renderSkills()}
       </div>
+
+
     );
   }
 }
