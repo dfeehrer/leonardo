@@ -29,7 +29,7 @@ const cover = ReactDOM.findDOMNode(this.refs.coverInput).value.trim();
     return (
        <li>
 
-        <div className="panel panel-default campaign-panel">
+        <div className="panel panel-default campaign-panel blank-campaign-panel">
         <div className="panel-body">
             <form id="campaign-form" onSubmit={this.handleSubmit.bind(this)} >
              <div className="form-group">

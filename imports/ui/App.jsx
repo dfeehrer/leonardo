@@ -21,6 +21,10 @@ class App extends Component {
     };
   }
 
+  componentWillMount(){
+    Meteor.call('campaigns.checkIP');
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 

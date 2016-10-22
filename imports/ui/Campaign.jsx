@@ -22,7 +22,7 @@ deleteThisCampaign(){
         <div className="panel-body">
           <h1>{this.props.campaign.name}</h1>
         <p>{this.props.campaign.cover}</p>
-        <button className="delete" onClick={this.deleteThisCampaign.bind(this)}>
+        <button className="delete btn btn-default" onClick={this.deleteThisCampaign.bind(this)}>
           Delete
         </button>
         </div>
@@ -32,12 +32,9 @@ deleteThisCampaign(){
     );
   }
 }
- 
+
 Campaign.propTypes = {
   // This component gets the task to display through a React prop.
   // We can use propTypes to indicate it is required
   campaign: PropTypes.object.isRequired,
 };
-
-
-
