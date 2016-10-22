@@ -4,16 +4,73 @@ body {
   background-color: #315481;
   background-image: linear-gradient(to bottom, #315481, #918e82 100%);
   background-attachment: fixed;
+ 
   position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+ 
   font-size: 14px;
 }
  
+.container {
+  margin: 0 auto;
+  min-height: 100%;
+}
+
 .main-jumbo{
+  color: white;
   text-align: center;
-  background: white;
   width: 100%;
+  position: relative;
+  background-image: url('bg.jpg');
+  background-attachment: fixed;
+  background-size: 100% auto;
+  background-align: center;
+  background-repeat: no-repeat;
 }
 
 .main-jumbo .btn{
   margin-top: 20px;
+  margin-bottom: 30px;
 }
+
+.main-jumbo h1{
+  margin-top: 0px;
+  padding-top: 20px;
+}
+
+.navbar-default{
+  margin-bottom: 0px;
+  background: transparent;
+  border-width: 0px;
+}
+
+.login-form-sign-in{
+  margin-top: 33%;
+  margin-bottom: auto;
+}
+
+
+.login-link-text{
+  color: white;
+}
+.navbar-default .navbar-brand{
+  color: white;
+}
+
+.cover-panel{
+  
+}
+
+ul {
+  list-style-type: none;
+}
+
+.campaign-panel{
+  width: 60%;
+}
+

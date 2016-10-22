@@ -4,10 +4,12 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Tasks } from '../api/tasks.js';
+import { Campaigns } from '../api/campaigns.js';
 
-import Task from './Task.jsx';
 import Nav from './Nav.jsx';
+import CoverLetter from './CoverLetter.jsx';
+import Campaign from './Campaign.jsx';
+import BlankCampaign from './BlankCampaign.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 // App component - represents the whole app
@@ -16,7 +18,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      hideCompleted: false,
     };
   }
 
@@ -32,26 +33,14 @@ class App extends Component {
     ReactDOM.findDOMNode(this.refs.textInput).value = '';
   }
 
-  toggleHideCompleted() {
-    this.setState({
-      hideCompleted: !this.state.hideCompleted,
-    });
-  }
+  renderCampaigns() {
 
-  renderTasks() {
-    let filteredTasks = this.props.tasks;
-    if (this.state.hideCompleted) {
-      filteredTasks = filteredTasks.filter(task => !task.checked);
-    }
-    return filteredTasks.map((task) => {
-      const currentUserId = this.props.currentUser && this.props.currentUser._id;
-      const showPrivateButton = task.owner === currentUserId;
+    return this.props.campaigns.map((campaign) => {
  
       return (
-        <Task
-          key={task._id}
-          task={task}
-          showPrivateButton={showPrivateButton}
+        <Campaign
+          key={campaign._id}
+          campaign={campaign}
         />
       );
     });
@@ -59,35 +48,33 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <header>
-        <Nav/>
-        </header>
+      <div className="container-fullwidth">
+        
           <div className="main-jumbo">
+          <Nav/>
             <h1>Derek Feehrer</h1>
             <h3>Engineer. Entrepreneur. Etc.</h3>
             <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
           </div>
-
-        <ul>
-          {this.renderTasks()}
-        </ul>
+          <div className="row">
+          <CoverLetter/>
+          <BlankCampaign/>
+          <ul>
+          {this.renderCampaigns()}
+          </ul>
+          </div>  
       </div>
     );
   }
 }
 
 App.propTypes = {
-  tasks: PropTypes.array.isRequired,
-  incompleteCount: PropTypes.number.isRequired,
-  currentUser: PropTypes.object,
+  campaigns: PropTypes.array.isRequired
 };
 
 export default createContainer(() => {
-  Meteor.subscribe('tasks');
+  Meteor.subscribe('campaigns');
   return {
-    tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
-    incompleteCount: Tasks.find({ checked: { $ne: true } }).count(),
-    currentUser: Meteor.user(),
+    campaigns: Campaigns.find({}, { sort: { timestamp: -1 } }).fetch()
   };
 }, App);
