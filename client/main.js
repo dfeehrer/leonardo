@@ -15,21 +15,21 @@ Meteor.startup(() => {
 FlowRouter.route( '/', {
   name: 'about',
   action() {
-    ReactLayout.render( About, { yield: <About /> } );
+    ReactLayout.render( App, { routeTarget: <About /> } );
   }
 });
 
 FlowRouter.route( '/derekfeehrer', {
-  name: 'about',
+  name: 'site',
   action() {
-    ReactLayout.render( Site, { yield: <About /> } );
+    ReactLayout.render( App, { routeTarget: <Site /> } );
   }
 });
 
 
 FlowRouter.route( '/derekfeehrer/dashboard', {
-  name: 'about',
+  name: 'dashboard',
   action() {
-    ReactLayout.render( Dashboard, { yield: <About /> } );
+    ReactLayout.render( App, { routeTarget: <Dashboard/> } );
   }
 });

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Sites } from '../api/campaigns.js';
+import { Settings } from '../api/campaigns.js';
 
 import Nav from './Nav.jsx';
 import About from './About.jsx';
@@ -14,7 +14,7 @@ import BlankCampaign from './BlankCampaign.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 // App component - represents the whole app
-class App extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
 
@@ -22,10 +22,6 @@ class App extends Component {
     };
   }
 
-
-  componentWillMount(){
-    Meteor.call('campaigns.checkIP');
-  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -40,16 +36,20 @@ class App extends Component {
   }
 
   renderCampaigns() {
-
-    return this.props.sites[0].campaigns.map((campaign) => {
+    console.log(this.props.settings);
+    if(this.props.settings[0]){
+    return this.props.settings[0].campaigns.map((campaign) => {
  
       return (
         <Campaign
-          key={campaign._id}
+          key={campaign.id}
           campaign={campaign}
         />
       );
     });
+    }else{
+      return null;
+    }
   }
 
   render() {
@@ -58,25 +58,28 @@ class App extends Component {
         
           <Nav/>
 
-          <div className="row">
-            <CoverLetter/>
+          <div className="row campaign-holder">
+          <div className="col-sm-12">
+            <h3>Add New Campaigns</h3>
             <BlankCampaign/>
+            </div>  
+            </div> 
+            <h3>Existing Campaigns</h3>
             <ul>
-              {/*this.renderCampaigns()*/}
+              {this.renderCampaigns()}
             </ul>
-          </div>  
       </div>
     );
   }
 }
 
-App.propTypes = {
-  sites: PropTypes.array.isRequired
+Dashboard.propTypes = {
+  settings: PropTypes.array.isRequired
 };
 
 export default createContainer(() => {
-  Meteor.subscribe('sites');
+  Meteor.subscribe('settings');
   return {
-    sites: Sites.find({}).fetch()
+    settings: Settings.find({}).fetch()
   };
-}, App);
+}, Dashboard);

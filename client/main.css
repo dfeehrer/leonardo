@@ -1,9 +1,10 @@
 /* CSS declarations go here */
 body {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #315481;
-  background-image: linear-gradient(to bottom, #315481, #918e82 100%);
+  background-image: linear-gradient(to bottom, rgba(100,100,100,1), rgba(50, 50, 50, 1)100%);
   background-attachment: fixed;
+  color: white;
  
   position: absolute;
   top: 0;
@@ -21,10 +22,15 @@ body {
   min-height: 100%;
 }
 
+.big-logo{
+padding-left: 10%;
+padding-right: 10%;
+}
 
 .about-jumbo{
   background-image: url('blurry3.jpg');
   color: blue gray;
+  height: 60%;
 }
 
 .personal-jumbo{
@@ -33,12 +39,10 @@ body {
 }
 
 .main-jumbo{
-
   text-align: center;
-  width: 100%;
   position: relative;
   background-attachment: fixed;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-align: center;
   background-repeat: no-repeat;
 }
@@ -55,9 +59,11 @@ body {
 }
 
 .navbar-default{
-  margin-bottom: 0px;
-  background: transparent;
-  border-width: 0px;
+  margin-bottom: 0px !important;
+  background: transparent !important;
+  border-width: 0px !important;
+  box-shadow: none !important;
+  color: white;
 }
 
 .login-form-sign-in{
@@ -92,8 +98,11 @@ ul {
 .about-col{
   text-align: center;
 }
+.bs-docs-section{
+  margin-top: 100px;
+}
 
 
-.navbar-default {
-  box-shadow: none;
+.bs-component{
+
 }

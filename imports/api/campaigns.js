@@ -3,9 +3,7 @@ import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
  
 export const Tasks = new Mongo.Collection('tasks');
-
-
-export const Campaigns = new Mongo.Collection('campaigns');
+export const Settings = new Mongo.Collection('settings');
 export const Addresses = new Mongo.Collection('addresses');
 export const Sites = new Mongo.Collection('sites');
 
@@ -14,13 +12,13 @@ export const Sites = new Mongo.Collection('sites');
 if (Meteor.isServer) {
   // This code only runs on the server
    // Only publish tasks that are public or belong to the current user
-  Meteor.publish('campaigns', function campaignsPublication() {
-    return Campaigns.find({});
+  Meteor.publish('settings', function settingsPublication() {
+    return Settings.find({userId: this.userId});
   });
 
 
-  Meteor.publish('sites', function userDataPublication() {
-    return Sites.find({userId: this.userId});
+  Meteor.publish('sites', function sitesPublication(fullname) {
+    return Sites.find({fullname: fullname});
   });
 }
 
@@ -37,10 +35,16 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    var newCampaign = {id: Random.id(6), name: name, cover: cover, timestamp: new Date(), hits: 0};
+    var newCampaign = {
+      id: Random.id(6), 
+      userId: this.userId,
+      name: name,
+      cover: cover,
+      timestamp: new Date(),
+       hits: 0
+     };
 
-    Meteor.users.update({userId: this.userId}, {$set: {'campaigns.-1': newCampaign}});
-    
+    Settings.update({userId: this.userId}, {$push: {campaigns: newCampaign}}, {upsert: true});
   }
   },
 
@@ -52,43 +56,66 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    Meteor.users.update({userId: this.userId}, {$pull: {campaigns: {id: id}}});
-    Campaigns.remove({id: id});
+    Settings.update({userId: this.userId}, {$pull: {campaigns: {id: id}}});
   },
 
   'campaigns.checkIP'(id) {
     if(Meteor.isServer){
     // Make sure the user is logged in before inserting a task
-    if (! this.userId) {
-      throw new Meteor.Error('not-authorized');
-    }
  
     clientIP = this.connection.clientAddress;
     console.log("client IP: " + clientIP);
+    this.unblock();
+    try {
+      var result = HTTP.call( 'GET', "http://ip-api.com/json/131.107.0.89", {});
+      var org = result.data.org;
+      //return true;
+      //console.log("org: " + org );
+      var activeCampaigns = Settings.findOne({}).campaigns;
+        for (let campaign of activeCampaigns){
+          console.log("trying to match : " + campaign.name + " with : " + org);
+          
+          //console.log("org: " + org);
 
+          if(org.toUpperCase().includes(campaign.name.toUpperCase())){
+            console.log("contains");
+            //console.log( org );
+            console.log("passing this to client: " + campaign.name.replace(/\s+/g, ''));
+            return campaign.name.replace(/\s+/g, '');
+          }
+          else{
+            //console.log("doesn't contain");
+            //console.log(org);
+          }
+
+        }
+        return "/";
+
+    } catch (e) {
+      // Got a network error, time-out or HTTP error in the 400 or 500 range.
+      return "/";
+    }
+    /*
     HTTP.call( 'GET', "http://ip-api.com/json/", {}, function( error, response ) {
       if ( error ) {
         console.log( error );
       } else {
         var org = response.data.org;
         if(org){
-          Addresses.insert({IP: clientIP, org: org});
+          //Addresses.insert({IP: clientIP, org: org});
+          //Addresses.insert{}
         }else{
-          Addresses.insert({IP: clientIP, org: ""});
+          //Addresses.insert({IP: clientIP, org: ""});
         }
+        */
         
+       // return null;
         //console.log(response);
-        console.log("org: " + org);
-        if(org.toUpperCase().includes("harvard".toUpperCase())){
-          console.log("contains");
-          console.log( org );
-        }
-        else{
-          console.log("doesn't contain");
-          console.log(org);
-        }
-      }
-    });
+        
+
+        
+      //}
+    //});
   }
   },
 

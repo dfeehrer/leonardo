@@ -19,7 +19,9 @@ export default class SkillArea extends Component {
 
       <div className="bs-docs-section">
 {/************ Progress Bars For Skills **************/}
-      <h3 id="progress-animated">SKILLS</h3>
+      <div className = "skill">
+      <h3 id="progress-animated">SKILLS<i className="fa fa-laptop fa-3x" aria-hidden="true"></i></h3>
+      </div>
         {this.renderSkills()}
       </div>
 
