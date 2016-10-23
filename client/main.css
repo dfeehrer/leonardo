@@ -21,17 +21,28 @@ body {
   min-height: 100%;
 }
 
-.main-jumbo{
+
+.about-jumbo{
+  background-image: url('blurry3.jpg');
+  color: blue gray;
+}
+
+.personal-jumbo{
+  background-image: url('bg.jpg');
   color: white;
+}
+
+.main-jumbo{
+
   text-align: center;
   width: 100%;
   position: relative;
-  background-image: url('bg.jpg');
   background-attachment: fixed;
   background-size: 100% auto;
   background-align: center;
   background-repeat: no-repeat;
 }
+
 
 .main-jumbo .btn{
   margin-top: 20px;
@@ -78,4 +89,11 @@ ul {
   margin-left: 40px;
 }
 
+.about-col{
+  text-align: center;
+}
 
+
+.navbar-default {
+  box-shadow: none;
+}

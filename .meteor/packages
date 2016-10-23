@@ -27,3 +27,6 @@ pauli:accounts-linkedin
 random@1.0.10
 http@1.2.9_1
 shell-server
+react
+kadira:flow-router
+kadira:react-layout

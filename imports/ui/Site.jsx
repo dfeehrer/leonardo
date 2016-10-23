@@ -26,14 +26,29 @@ class App extends Component {
     Meteor.call('campaigns.checkIP');
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+
+    // Find the text field via the React ref
+    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+
+    Meteor.call('tasks.insert', text);
+
+    // Clear form
+    ReactDOM.findDOMNode(this.refs.textInput).value = '';
+  }
 
 
   render() {
     return (
-      <div>
-
-          {this.props.routeTarget}
-
+      <div className="container-fullwidth">
+        
+          <div className="main-jumbo personal-jumbo">
+          <Nav/>
+            <h1>Derek Feehrer</h1>
+            <h3>Engineer. Entrepreneur. Etc.</h3>
+            <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+          </div>
       </div>
     );
   }

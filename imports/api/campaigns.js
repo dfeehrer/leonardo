@@ -7,12 +7,20 @@ export const Tasks = new Mongo.Collection('tasks');
 
 export const Campaigns = new Mongo.Collection('campaigns');
 export const Addresses = new Mongo.Collection('addresses');
+export const Sites = new Mongo.Collection('sites');
+
+
  
 if (Meteor.isServer) {
   // This code only runs on the server
    // Only publish tasks that are public or belong to the current user
   Meteor.publish('campaigns', function campaignsPublication() {
     return Campaigns.find({});
+  });
+
+
+  Meteor.publish('sites', function userDataPublication() {
+    return Sites.find({userId: this.userId});
   });
 }
 
@@ -23,13 +31,16 @@ Meteor.methods({
     check(name, String);
     check(cover, String);
 
- 
+  
     // Make sure the user is logged in before inserting a task
     if (! this.userId) {
       throw new Meteor.Error('not-authorized');
     }
 
-    Campaigns.insert({id: Random.id(6), name: name, cover: cover, timestamp: new Date(), hits: 0});
+    var newCampaign = {id: Random.id(6), name: name, cover: cover, timestamp: new Date(), hits: 0};
+
+    Meteor.users.update({userId: this.userId}, {$set: {'campaigns.-1': newCampaign}});
+    
   }
   },
 
@@ -41,6 +52,7 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
+    Meteor.users.update({userId: this.userId}, {$pull: {campaigns: {id: id}}});
     Campaigns.remove({id: id});
   },
 

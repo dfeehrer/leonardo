@@ -22,18 +22,49 @@ class App extends Component {
     };
   }
 
+
   componentWillMount(){
     Meteor.call('campaigns.checkIP');
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
 
+    // Find the text field via the React ref
+    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+
+    Meteor.call('tasks.insert', text);
+
+    // Clear form
+    ReactDOM.findDOMNode(this.refs.textInput).value = '';
+  }
+
+  renderCampaigns() {
+
+    return this.props.sites[0].campaigns.map((campaign) => {
+ 
+      return (
+        <Campaign
+          key={campaign._id}
+          campaign={campaign}
+        />
+      );
+    });
+  }
 
   render() {
     return (
-      <div>
+      <div className="container-fullwidth">
+        
+          <Nav/>
 
-          {this.props.routeTarget}
-
+          <div className="row">
+            <CoverLetter/>
+            <BlankCampaign/>
+            <ul>
+              {/*this.renderCampaigns()*/}
+            </ul>
+          </div>  
       </div>
     );
   }
