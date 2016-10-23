@@ -27,7 +27,6 @@ const cover = ReactDOM.findDOMNode(this.refs.coverInput).value.trim();
     // so that we can style them nicely in CSS
 
     return (
-       <li>
 
         <div className="panel panel-default campaign-panel blank-campaign-panel">
         <div className="panel-body">
@@ -55,7 +54,6 @@ const cover = ReactDOM.findDOMNode(this.refs.coverInput).value.trim();
         </div>
       </div>
        
-      </li>
     );
   }
 }

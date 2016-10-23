@@ -2,25 +2,34 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
  
-export const Tasks = new Mongo.Collection('tasks');
 export const Settings = new Mongo.Collection('settings');
 export const Addresses = new Mongo.Collection('addresses');
 export const Sites = new Mongo.Collection('sites');
 
 
- 
 if (Meteor.isServer) {
   // This code only runs on the server
    // Only publish tasks that are public or belong to the current user
-  Meteor.publish('settings', function settingsPublication() {
+ 
+ /* Meteor.publish('settings', function settingsPublication() {
     return Settings.find({userId: this.userId});
-  });
+  });*/
 
 
   Meteor.publish('sites', function sitesPublication(fullname) {
     return Sites.find({fullname: fullname});
   });
+
+  Meteor.publish('addresses', function addressesPublication() {
+    return Addresses.find({});
+  });
+
+  Meteor.publish('campaigns', function campaignPublication() {
+    return Settings.find({});
+    
+  });
 }
+
 
 Meteor.methods({
   
@@ -39,6 +48,7 @@ Meteor.methods({
       id: Random.id(6), 
       userId: this.userId,
       name: name,
+      concName: name.replace(/\s+/g, ''),
       cover: cover,
       timestamp: new Date(),
        hits: 0
@@ -80,6 +90,7 @@ Meteor.methods({
           if(org.toUpperCase().includes(campaign.name.toUpperCase())){
             console.log("contains");
             //console.log( org );
+            Addresses.update({IP: clientIP}, {org: org, timestamp: new Date()}, {upsert: true});
             console.log("passing this to client: " + campaign.name.replace(/\s+/g, ''));
             return campaign.name.replace(/\s+/g, '');
           }
@@ -87,7 +98,6 @@ Meteor.methods({
             //console.log("doesn't contain");
             //console.log(org);
           }
-
         }
         return "/";
 

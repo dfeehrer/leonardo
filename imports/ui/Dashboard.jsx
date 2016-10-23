@@ -53,6 +53,14 @@ class Dashboard extends Component {
   }
 
   render() {
+
+    var top;
+    if(!Meteor.userId){
+      top = <h2>Login to access the HireHydrant Dashboard</h2>;
+    }else{
+      top = <div><h3>Add New Campaigns</h3><BlankCampaign/></div>;
+    }
+
     return (
       <div className="container-fullwidth">
         
@@ -60,8 +68,8 @@ class Dashboard extends Component {
 
           <div className="row campaign-holder">
           <div className="col-sm-12">
-            <h3>Add New Campaigns</h3>
-            <BlankCampaign/>
+            {top}
+            
             </div>  
             </div> 
             <h3>Existing Campaigns</h3>
@@ -78,7 +86,7 @@ Dashboard.propTypes = {
 };
 
 export default createContainer(() => {
-  Meteor.subscribe('settings');
+  Meteor.subscribe('campaigns');
   return {
     settings: Settings.find({}).fetch()
   };

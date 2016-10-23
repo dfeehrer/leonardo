@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Sites } from '../api/campaigns.js';
+import { Settings } from '../api/campaigns.js';
 
 
 import SkillArea from './SkillArea.jsx';
@@ -14,6 +15,7 @@ import LeadershipArea from './LeadershipArea.jsx';
 import HonorArea from './HonorArea.jsx';
 
 import Nav from './Nav.jsx';
+import Jumbo from './Jumbo.jsx';
 import App from './App.jsx';
 import About from './About.jsx';
 import CoverLetter from './CoverLetter.jsx';
@@ -23,7 +25,7 @@ import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 
 // App component - represents the whole app
-export default class Site extends Component {
+class Site extends Component {
   constructor(props) {
     super(props);
 
@@ -31,19 +33,20 @@ export default class Site extends Component {
     };
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
 
-    // Find the text field via the React ref
-    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-
-    Meteor.call('tasks.insert', text);
-
-    // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = '';
-  }
-
-
+    findCover(){
+      if(this.props.settings[0]){
+        for (let campaign of this.props.settings[0].campaigns){
+        if(campaign.concName == Session.get('organization')){
+          return campaign.cover;
+        }
+      }
+      return "";
+      }else{
+        return "";
+      }
+      
+    }
 
   render() {
 
@@ -116,35 +119,32 @@ var ex_skill1 = {
 
     return (
       <div>
-      <div className="container-fullwidth">
-        
-          <div className="main-jumbo personal-jumbo">
-          <Nav/>
-            <h1>Derek Feehrer</h1>
-            <h3>Engineer. Entrepreneur. Etc.</h3>
-            <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-          </div>
-      </div>
+      
+      <Jumbo/>
+      <CoverLetter coverText={this.findCover()} />
       <div className="container">
       <EducationArea edus={ex_eduArea} ></EducationArea>
       <SkillArea skills={ex_skillArea} id = "skills"></SkillArea>
       <ExpArea exps={ex_expArea} id = "experience"></ExpArea>
       <LeadershipArea leaderships={ex_leadershipArea} ></LeadershipArea>
       <HonorArea honors={ex_honorArea} ></HonorArea>
+      <div className="bottom">
+        <button className="btn btn-primary btn-lg">Hire Me</button>
+      </div>
       </div>
       </div>
       
     );
   }
 }
-/*
+
 Site.propTypes = {
-  sites: PropTypes.array.isRequired,
+  settings: PropTypes.array.isRequired
 };
 
 export default createContainer(() => {
-  Meteor.subscribe('sites');
+  Meteor.subscribe('campaigns');
   return {
-    sites: Sites.find({}).fetch()
+    settings: Settings.find({}).fetch()
   };
-}, Site);*/
+}, Site);
