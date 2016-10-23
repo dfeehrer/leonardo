@@ -17,17 +17,15 @@ deleteThisCampaign(){
 
     return (
        <li>
-
         <div className="panel panel-default campaign-panel">
         <div className="panel-body">
           <h1>{this.props.campaign.name}</h1>
         <p>{this.props.campaign.cover}</p>
-        <button className="delete btn btn-default" onClick={this.deleteThisCampaign.bind(this)}>
+        <button className="delete btn btn-primary" onClick={this.deleteThisCampaign.bind(this)}>
           Delete
         </button>
         </div>
       </div>
-       
       </li>
     );
   }

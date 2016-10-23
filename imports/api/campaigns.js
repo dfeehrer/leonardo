@@ -11,9 +11,9 @@ if (Meteor.isServer) {
   // This code only runs on the server
    // Only publish tasks that are public or belong to the current user
  
- /* Meteor.publish('settings', function settingsPublication() {
+  Meteor.publish('settings', function settingsPublication() {
     return Settings.find({userId: this.userId});
-  });*/
+  });
 
 
   Meteor.publish('sites', function sitesPublication(fullname) {

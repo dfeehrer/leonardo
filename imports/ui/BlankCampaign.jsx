@@ -50,7 +50,7 @@ const cover = ReactDOM.findDOMNode(this.refs.coverInput).value.trim();
               />
               </div>
             </form>
-            <button className="btn btn-default" type="submit" form="campaign-form" value="Submit">Add</button>
+            <button className="btn btn-primary" type="submit" form="campaign-form" value="Submit">Add</button>
         </div>
       </div>
        

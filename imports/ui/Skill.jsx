@@ -25,11 +25,13 @@ var skillStyle = {
          width:this.props.skill.percentage + "%"
        };
 
+       var classString = "progress-bar " + this.props.skill.color;
+
     return (
 
         <div className="bs-component">
           <div className="progress progress-striped active">
-            <div className="progress-bar progress-bar-danger" style={skillStyle}>{this.props.skill.skillName}</div>
+            <div className={classString} style={skillStyle}>{this.props.skill.skillName}</div>
           </div>
         </div>
 

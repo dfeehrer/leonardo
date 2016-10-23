@@ -16,6 +16,7 @@ import HonorArea from './HonorArea.jsx';
 
 import Nav from './Nav.jsx';
 import Jumbo from './Jumbo.jsx';
+import CustomJumbo from './CustomJumbo.jsx';
 import App from './App.jsx';
 import About from './About.jsx';
 import CoverLetter from './CoverLetter.jsx';
@@ -48,23 +49,41 @@ class Site extends Component {
       
     }
 
+    findCampaign(){
+      if(this.props.settings[0]){
+        for (let campaign of this.props.settings[0].campaigns){
+        if(campaign.concName == Session.get('organization')){
+          return campaign
+        }
+      }
+      return "";
+      }else{
+        return "";
+      }
+      
+    }
+
   render() {
 
 var ex_skill1 = {
-      skillName: "REact",
-      percentage: "30"
+      skillName: "React JS",
+      percentage: "45",
+      color: "progress-bar-info"
     }
     var ex_skill2 = {
-      skillName: "JS",
-      percentage: "50"
+      skillName: "MongoDB",
+      percentage: "60",
+      color: "progress-bar-warning"
     }
     var ex_skill3 = {
-      skillName: "METEOR",
-      percentage: "100"
+      skillName: "Meteor JS",
+      percentage: "70",
+      color: "progress-bar-success"
     }
     var ex_skill4 = {
-      skillName: "python",
-      percentage: "95"
+      skillName: "Bootstrap",
+      percentage: "90",
+      color: "progress-bar-danger"
     }
     var ex_skillArea =  [ex_skill1,ex_skill2,ex_skill3,ex_skill4]
 
@@ -96,12 +115,14 @@ var ex_skill1 = {
     var ex_leadershipArea = [ex_leadership1,ex_leadership2]
     var ex_edu1 = {
       eduName: "Worcester Polytechnic Institute",
-      eduDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      eduDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      image: "wpi_seal.jpg"
     }
 
     var ex_edu2 = {
       eduName: "Westford Academy",
-      eduDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      eduDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      image: "wa_seal.png"
     }
     var ex_eduArea = [ex_edu1,ex_edu2]
 
@@ -116,14 +137,23 @@ var ex_skill1 = {
     }
     var ex_honorArea = [ex_honor1,ex_honor2]
 
+    var jumbo;
+    if(Session.get('organization')){
+      jumbo = <CustomJumbo campaign={this.findCampaign()} />;
+    }else{
+      jumbo = <Jumbo/>;
+    }
+    
 
     return (
       <div>
       
-      <Jumbo/>
+      {jumbo}
       <CoverLetter coverText={this.findCover()} />
       <div className="container">
+      <section id="education">
       <EducationArea edus={ex_eduArea} ></EducationArea>
+      </section>
       <SkillArea skills={ex_skillArea} id = "skills"></SkillArea>
       <ExpArea exps={ex_expArea} id = "experience"></ExpArea>
       <LeadershipArea leaderships={ex_leadershipArea} ></LeadershipArea>

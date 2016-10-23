@@ -19,7 +19,7 @@ export default class Education extends Component {
         */
         <div className="media">
   <a className="media-left" href="#">
-    <img className="media-object" src="image.jpg"></img>
+    <img className="media-object" width="70px" src={this.props.edu.image}></img>
   </a>
   <div className="media-body">
     <h4 className="media-heading">{this.props.edu.eduName}</h4>

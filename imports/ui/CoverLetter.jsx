@@ -10,11 +10,12 @@ export default class CoverLetter extends Component {
     // so that we can style them nicely in CSS
 
     return (
-      <div className="panel panel-default cover-panel">
-        <div className="panel-body">
-          {this.props.coverText}
-        </div>
-      </div>
+      <div className="panel panel-default">
+  <div className="panel-body">
+    <h3>{this.props.coverText}</h3>
+  </div>
+</div>
+          
       
     );
   }

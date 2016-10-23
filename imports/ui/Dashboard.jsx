@@ -62,7 +62,7 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="container-fullwidth">
+      <div className="container-fullwidth dash-div">
         
           <Nav/>
 
@@ -86,7 +86,7 @@ Dashboard.propTypes = {
 };
 
 export default createContainer(() => {
-  Meteor.subscribe('campaigns');
+  Meteor.subscribe('settings');
   return {
     settings: Settings.find({}).fetch()
   };

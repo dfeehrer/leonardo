@@ -9,8 +9,8 @@ export default class Nav extends Component {
   render() {
      // Give tasks a different className when they are checked off,
     // so that we can style them nicely in CSS
-    var dash;
-    if(Meteor.userId){
+    var dash = "";
+    if(Meteor.user){
       dash = <li><a href="/derekfeehrer/dashboard">Dashboard</a></li>;
     }
     
@@ -23,7 +23,7 @@ export default class Nav extends Component {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span> 
               </button>
-              <a className="navbar-brand" id="logo" href="#">Home</a>
+              <a className="navbar-brand" id="logo" href="/">Home</a>
             </div>
             <div className="collapse navbar-collapse" id="myNavbar">
               <ul className="nav navbar-nav">

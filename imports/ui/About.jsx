@@ -11,6 +11,7 @@ export default class About extends Component {
     // so that we can style them nicely in CSS
 
     return (
+      <div>
           <div className="container-fullwidth">
           <div className="main-jumbo about-jumbo">
           <Nav/>
@@ -19,6 +20,8 @@ export default class About extends Component {
 
             <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
           </div>
+          </div>
+          <div className="container-fluid">
             <div className="row">
               <div className="col-sm-4 about-col">
                 <i className="fa fa-laptop fa-5x"></i>
@@ -36,7 +39,9 @@ export default class About extends Component {
               </div> 
 
             </div>
-          </div>
+            </div>
+            </div>
+          
     );
   }
 }
